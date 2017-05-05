@@ -33,13 +33,12 @@ public class DownloadApkThread implements Runnable {
     private DownloadHandler downloadHandler;
     private Handler mHandler;
 
-    public DownloadApkThread(Context mContext, Handler mHandler, ProgressBar mProgress, AlertDialog mDownloadDialog, HashMap<String, String> mHashMap) {
-        this.mDownloadDialog = mDownloadDialog;
+    public DownloadApkThread(Context mContext, Handler mHandler, HashMap<String, String> mHashMap) {
         this.mHashMap = mHashMap;
         this.mHandler = mHandler;
 
         this.mSavePath = Environment.getExternalStorageDirectory() + "/" + "download"; // SD Path
-        this.downloadHandler = new DownloadHandler(mContext, mProgress, mDownloadDialog, this.mSavePath, mHashMap);
+        this.downloadHandler = new DownloadHandler(mContext, this.mSavePath, mHashMap);
     }
 
 
@@ -83,10 +82,6 @@ public class DownloadApkThread implements Runnable {
                 do {
                     int numread = is.read(buf);
                     count += numread;
-                    // 计算进度条位置
-                    progress = (int) (((float) count / length) * 100);
-                    downloadHandler.updateProgress(progress);
-                    // 更新进度
                     downloadHandler.sendEmptyMessage(Constants.DOWNLOAD);
                     if (numread <= 0) {
                         // 下载完成

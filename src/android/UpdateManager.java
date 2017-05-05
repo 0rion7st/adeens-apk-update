@@ -166,12 +166,13 @@ public class UpdateManager {
     private void emitNoticeDialogOnClick() {
         isDownloading = true;
         // 显示下载对话框
-        Map<String, Object> ret = msgBox.showDownloadDialog(
-                downloadDialogOnClickNeg,
-                downloadDialogOnClickPos,
-                downloadDialogOnClickNeu);
+        //Map<String, Object> ret = msgBox.showDownloadDialog(
+        //        downloadDialogOnClickNeg,
+        //        downloadDialogOnClickPos,
+        //        downloadDialogOnClickNeu);
         // 下载文件
-        downloadApk((AlertDialog) ret.get("dialog"), (ProgressBar) ret.get("progress"));
+        downloadApk();
+
     }
 
     /**
@@ -221,11 +222,11 @@ public class UpdateManager {
      * @param mProgress
      * @param mDownloadDialog
      */
-    private void downloadApk(AlertDialog mDownloadDialog, ProgressBar mProgress) {
-        LOG.d(TAG, "downloadApk" + mProgress);
+    private void downloadApk() {
+        //LOG.d(TAG, "downloadApk" + mProgress);
 
         // 启动新线程下载软件
-        downloadApkThread = new DownloadApkThread(mContext, mHandler, mProgress, mDownloadDialog, checkUpdateThread.getMHashMap());
+        downloadApkThread = new DownloadApkThread(mContext, mHandler, checkUpdateThread.getMHashMap());
         this.cordova.getThreadPool().execute(downloadApkThread);
         // new Thread(downloadApkThread).start();
     }
