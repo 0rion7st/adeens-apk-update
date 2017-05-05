@@ -63,13 +63,21 @@ public class DownloadHandler extends Handler {
      */
     private void installApk() {
         File apkFile = new File(mSavePath, mHashMap.get("name"));
-        if (!apkFile.exists()) {
-            return;
-        }
-        // 通过Intent安装APK文件
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.setDataAndType(Uri.parse("file://" + apkFile.toString()), "application/vnd.android.package-archive");
-        mContext.startActivity(i);
+         if(apkFile.exists())
+         {
+                try {
+                    String command;
+                    command = "pm install -r " + apkFile.getPath();
+                    Process proc = Runtime.getRuntime().exec(new String[] { "su", "-c", command });
+                    proc.waitFor();
+                } catch (Exception e) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.setDataAndType(Uri.parse("file://" + apkFile.toString()), "application/vnd.android.package-archive");
+                        mContext.startActivity(i);
+                }
+         }
+
+
     }
 }
