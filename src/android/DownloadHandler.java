@@ -71,7 +71,7 @@ public class DownloadHandler extends Handler {
                     command = "pm install -r " + apkFile.getPath();
                     LOG.d(TAG, "Automatic apk update attempt:" + command);
                     Process proc = Runtime.getRuntime().exec(command);
-                    int exitCode = process.waitFor();
+                    int exitCode = proc.waitFor();
                      if (exitCode != 0) {
                          throw new IOException("Command exited with " + exitCode);
                      }
