@@ -52,7 +52,7 @@ public class UpdateManager {
     }
 
     public UpdateManager(JSONArray args, CallbackContext callbackContext, Context context) {
-        this(args, callbackContext, context, "http://192.168.3.102:8080/update_apk/version.xml");
+        this(args, callbackContext, context, "http://repo.adeens.com/version.xml");
     }
 
     public UpdateManager(JSONArray args, CallbackContext callbackContext, Context context, String updateUrl) {
@@ -145,8 +145,8 @@ public class UpdateManager {
             } else {
                 LOG.d(TAG, "need update");
                 // 显示提示对话框
-                msgBox.showNoticeDialog(noticeDialogOnClick);
-                mHandler.sendEmptyMessage(Constants.VERSION_NEED_UPDATE);
+                //msgBox.showNoticeDialog(noticeDialogOnClick);
+                mHandler.sendEmptyMessage(Constants.DOWNLOAD_CLICK_START);
             }
         } else {
             mHandler.sendEmptyMessage(Constants.VERSION_UP_TO_UPDATE);
