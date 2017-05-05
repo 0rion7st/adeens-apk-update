@@ -10,7 +10,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
-
+import java.io.IOException;
 import org.apache.cordova.LOG;
 import java.io.File;
 import java.util.HashMap;
