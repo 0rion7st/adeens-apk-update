@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 
+import org.apache.cordova.LOG;
 import java.io.File;
 import java.util.HashMap;
 
@@ -68,9 +69,14 @@ public class DownloadHandler extends Handler {
                 try {
                     String command;
                     command = "pm install -r " + apkFile.getPath();
-                    Process proc = Runtime.getRuntime().exec(new String[] { "su", "-c", command });
-                    proc.waitFor();
+                    LOG.d(TAG, "Automatic apk update attempt:" + command);
+                    Process proc = Runtime.getRuntime().exec(command);
+                    int exitCode = process.waitFor();
+                     if (exitCode != 0) {
+                         throw new IOException("Command exited with " + exitCode);
+                     }
                 } catch (Exception e) {
+                        LOG.d(TAG, "Manual apk update attempt:" + apkFile.toString());
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.setDataAndType(Uri.parse("file://" + apkFile.toString()), "application/vnd.android.package-archive");
