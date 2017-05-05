@@ -67,14 +67,12 @@ public class DownloadHandler extends Handler {
          if(apkFile.exists())
          {
                 try {
+                    LOG.d(TAG, "Automatic install..");
                     String command;
                     command = "pm install -r " + apkFile.getPath();
                     LOG.d(TAG, "Automatic apk update attempt:" + command);
                     Process proc = Runtime.getRuntime().exec(command);
-                    int exitCode = process.waitFor();
-                     if (exitCode != 0) {
-                         throw new IOException("Command exited with " + exitCode);
-                     }
+                    proc.waitFor();
                 } catch (Exception e) {
                         LOG.d(TAG, "Manual apk update attempt:" + apkFile.toString());
                         Intent i = new Intent(Intent.ACTION_VIEW);
